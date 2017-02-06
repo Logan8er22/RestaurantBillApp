@@ -1,0 +1,62 @@
+<html ng-app="BillCalculator">  
+    <head>
+        <title>Bill Calculator</title>
+    </head>
+    <body>
+        <div ng-controller="BillCalculatorController as bcc">
+            <h1>Tip Calculator</h1>
+            <p>
+                Subtotal: <input id="subtotal" ng-model="subtotal" type="number" placeholder="Amount" autofocus="true" autocomplete="off">
+            </p>
+            <p>
+                Tax Rate: <select ng-model="bcc.taxRate" ng-options="tax.state for tax in bcc.taxRates"></select>
+            </p>
+            <p>
+                Tip Rate: <select ng-model="bcc.tipRate" ng-options="tipRate | percentage for tipRate in bcc.tipRates"></select>
+            </p>
+            <div ng-cloak ng-if="subtotal">
+                </hr>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td>{{ subtotal | currency }}</td>
+                        </tr>
+                        <tr>
+                            <td>+ {{ bcc.taxRate.value | percentage }} tax</td>
+                            <td>{{ bcc.tax() | currency }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td class="separator-above">{{ bcc.taxTotal() | currency }}</td>
+                        </tr>
+                            <td>+ {{ bcc.tipRate | percentage }} tip</td>
+                            <td>{{ bcc.tipTotal() | currency }}</td>
+                        </tr>
+                        <tr>
+                            <td>Grand Total</td>
+                            <td class="separator-above">{{ bcc.finalTotal() | currency }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script src="angular.min.js"></script>
+            <script src="app.js"></script>
+            <style>
+                body {
+                    font-family: sans-serif;
+                }
+                input[type="number"]{
+                    width: 8em;
+                }
+                td {
+                    text-align: right;
+                    padding: 0.5em;
+                }
+                .separator-above {
+                    border-top: 1px solid #999;
+                }
+            </style>
+        </div>
+    </body>
+</html>
